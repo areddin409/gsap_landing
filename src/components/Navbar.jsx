@@ -9,34 +9,21 @@ import { useGSAP } from '@gsap/react';
 
 /**
  * Navbar Component
- * 
+ *
  * A responsive navigation bar that features:
  * - Scroll-triggered background opacity animation using GSAP
  * - Dynamic navigation links from constants
  * - Logo and brand name display
  * - Smooth transitions with blur effects
- * 
+ *
  * @component
  * @returns {JSX.Element} The rendered navigation component
- * 
- * @example
- * ```jsx
- * import Navbar from './components/Navbar';
- * 
- * function App() {
- *   return (
- *     <div>
- *       <Navbar />
- *       // ... rest of app
- *     </div>
- *   );
- * }
- * ```
+ *
  */
 const Navbar = () => {
   /**
    * GSAP Animation Setup
-   * 
+   *
    * Creates a scroll-triggered animation that transforms the navbar
    * background from transparent to semi-transparent with blur effect
    * when the navbar bottom reaches the top of the viewport
@@ -54,8 +41,8 @@ const Navbar = () => {
     // Animate navbar background on scroll
     navTween.fromTo(
       'nav', // Target element
-      { 
-        backgroundColor: 'transparent' // Initial state: fully transparent
+      {
+        backgroundColor: 'transparent', // Initial state: fully transparent
       },
       {
         backgroundColor: '#00000050', // Final state: 50% opacity black
@@ -71,9 +58,9 @@ const Navbar = () => {
       <div>
         {/* Brand/Logo Section */}
         <a href="#home" className="flex items-center gap-2">
-          <img 
-            src="/images/logo.png" 
-            alt="Velvet Pour logo" 
+          <img
+            src="/images/logo.png"
+            alt="Velvet Pour logo"
             // Consider adding width/height for better performance
           />
           <p>Velvet Pour</p>
@@ -83,9 +70,7 @@ const Navbar = () => {
         <ul>
           {navLinks.map(link => (
             <li key={link.id}>
-              <a href={`#${link.id}`}>
-                {link.title}
-              </a>
+              <a href={`#${link.id}`}>{link.title}</a>
             </li>
           ))}
         </ul>
