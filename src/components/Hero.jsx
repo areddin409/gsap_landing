@@ -141,7 +141,7 @@ const Hero = () => {
         {/* Main Content Container */}
         <div className="body">
           {/* Commented out arrow element - kept for potential future use */}
-          {/* <img src="/images/arrow.png" alt="arrow" className="arrow" /> */}
+          <img src="/images/arrow.png" alt="arrow" className="arrow" />
 
           <div className="content">
             {/* Desktop-only tagline section - hidden on mobile */}
