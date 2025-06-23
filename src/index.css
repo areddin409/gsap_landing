@@ -92,7 +92,7 @@ body {
     content: '';
     @apply absolute inset-0 size-full;
     background-image: url('/images/noise.png');
-    opacity: 0.5;
+    opacity: 0.66;
     pointer-events: none;
   }
 
