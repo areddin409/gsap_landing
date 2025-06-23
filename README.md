@@ -1,12 +1,91 @@
-# React + Vite
+# GSAP Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive landing page built with React, GSAP animations, and Tailwind CSS. This project showcases smooth animations and interactive elements powered by the GreenSock Animation Platform (GSAP).
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Smooth Animations**: Powered by GSAP for high-performance animations
+- **Responsive Design**: Mobile-first approach with `react-responsive`
+- **Modern Styling**: Tailwind CSS for rapid and consistent styling
+- **Fast Development**: Vite for lightning-fast HMR and build times
+- **Code Quality**: ESLint and Prettier for consistent code formatting
 
-## Expanding the ESLint configuration
+## 🚀 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React 19.1.0
+- **Animation**: GSAP 3.13.0 with @gsap/react
+- **Styling**: Tailwind CSS 4.1.10
+- **Build Tool**: Vite 6.3.5
+- **Responsive**: react-responsive
+- **Linting**: ESLint
+- **Formatting**: Prettier
+
+## 📦 Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd gsap_landing
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+## 🛠️ Development
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## 📜 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## 📁 Project Structure
+
+```
+gsap_landing/
+├── public/          # Static assets
+├── src/             # Source code
+│   ├── App.jsx      # Main application component
+│   ├── main.jsx     # Application entry point
+│   └── index.css    # Global styles
+├── constants/       # Project constants
+├── .prettierrc      # Prettier configuration
+├── eslint.config.js # ESLint configuration
+├── vite.config.js   # Vite configuration
+└── package.json     # Dependencies and scripts
+```
+
+## 🎨 GSAP Integration
+
+This project uses GSAP for creating smooth, performant animations. The `@gsap/react` package provides React-specific utilities for integrating GSAP animations seamlessly.
+
+## 📱 Responsive Design
+
+The project uses `react-responsive` for handling different screen sizes and breakpoints, ensuring a great experience across all devices.
+
+## 🎯 Building for Production
+
+Create an optimized production build:
+
+```bash
+npm run build
+```
+
+The built files will be in the `dist/` directory, ready for deployment.
+
+## 📄 License
+
+This project is private and not intended for public distribution.
