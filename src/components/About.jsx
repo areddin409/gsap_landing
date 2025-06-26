@@ -1,84 +1,77 @@
-/**
- * @fileoverview About section component with GSAP text and grid animations
- * Features word-by-word text reveals and staggered grid image animations
- */
-
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/all';
+import { useGSAP } from '@gsap/react';
 
 /**
  * About Component
- *
- * A comprehensive about section featuring:
- * - Word-by-word title animation using GSAP SplitText
- * - Scroll-triggered timeline animations
- * - Staggered grid image reveals with fade-in effects
- * - Responsive grid layout with different column spans
- * - Company statistics and customer testimonials
- * - Badge highlighting and brand messaging
- *
- * @component
- * @returns {JSX.Element} The rendered about section with animated content
- *
- *
- * @requires gsap - For animations and ScrollTrigger
- * @requires gsap/SplitText - For text splitting animations (GSAP Club plugin)
+ * 
+ * A comprehensive section showcasing the bar's philosophy and craftsmanship
+ * through animated text reveals and a responsive image grid layout.
+ * 
+ * Features:
+ * - GSAP SplitText animation for word-by-word title reveal
+ * - Scroll-triggered animations for title and image grid
+ * - Responsive grid layout with animated image reveals
+ * - Customer rating display with social proof
+ * - Detailed brand messaging about cocktail craftsmanship
+ * - Decorative noisy texture overlays on images
+ * 
+ * Animation Sequence:
+ * 1. Title words animate in with staggered timing
+ * 2. Image grid elements fade in with sequential stagger
+ * 3. All animations triggered when section enters viewport
+ * 
+ * Dependencies:
+ * - gsap: Core animation library with ScrollTrigger
+ * - gsap/SplitText: Text splitting plugin for word-level animation
+ * - @gsap/react: React hooks for GSAP integration
+ * 
+ * @returns {JSX.Element} The about section with animated content and image grid
  */
 const About = () => {
-  /**
-   * GSAP Animation Setup
-   *
-   * Implements scroll-triggered animations for:
-   * 1. Word-by-word title reveal animation using SplitText
-   * 2. Staggered grid image animations for visual impact
-   *
-   * Animation sequence:
-   * - Title words animate with exponential easing and stagger
-   * - Grid images follow with overlapping timeline for smooth flow
-   */
   useGSAP(() => {
-    // Split the main title into individual words for granular animation control
+    // Split the main title into individual words for staggered animation
     const titleSplit = SplitText.create('#about h2', {
-      type: 'words', // Split by words rather than characters for readable flow
+      type: 'words',
     });
 
-    // Create scroll-triggered timeline that starts when section enters viewport
+    // Create scroll-triggered timeline for coordinated animations
     const scrollTimeline = gsap.timeline({
       scrollTrigger: {
-        trigger: '#about', // Element that triggers the animation
+        trigger: '#about',
         start: 'top center', // Start when section top hits viewport center
-        // Note: No 'end' specified, so animation runs once and holds
       },
     });
 
-    // Animate title words with sequential reveal effect
+    // Sequence animations for smooth visual flow
     scrollTimeline
+      // Animate title words with upward slide and fade-in effect
       .from(titleSplit.words, {
-        opacity: 0, // Start completely transparent
-        duration: 1, // 1 second per word animation
-        yPercent: 100, // Start 100% below final position
-        ease: 'expo.out', // Exponential easing for smooth deceleration
-        stagger: 0.02, // 0.02s delay between each word
+        opacity: 0,        // Start completely transparent
+        duration: 1,       // 1 second animation duration
+        yPercent: 100,     // Start 100% below final position
+        ease: 'expo.out',  // Smooth exponential easing
+        stagger: 0.02,     // 0.02s delay between each word
       })
-      // Chain grid animation with slight overlap for smooth flow
+      // Animate image grid elements with staggered fade-in
       .from(
-        '.top-grid div, .bottom-grid div', // Target all grid items in both grids
+        '.top-grid div, .bottom-grid div', // Target all grid items
         {
-          opacity: 0, // Start transparent
-          duration: 1, // 1 second animation duration
-          ease: 'power1.inOut', // Smooth power easing
-          stagger: 0.04, // 0.04s delay between each grid item
+          opacity: 0,             // Start transparent
+          duration: 1,            // 1 second duration
+          ease: 'power1.inOut',   // Smooth power easing
+          stagger: 0.04,          // 0.04s delay between each grid item
         },
-        '-=0.5' // Start 0.5s before previous animation ends
+        '-=0.5' // Start 0.5s before previous animation completes
       );
-  }, []); // Empty dependency array ensures animation runs once on mount
+  });
+
   return (
     <div id="about">
-      {/* Content Header Section */}
+      {/* Main content section with responsive padding */}
       <div className="mb-16 md:px-0 px-5">
         <div className="content">
-          {/* Main Title and Badge Section */}
+          {/* Primary content area with title and brand messaging */}
           <div className="md:col-span-8">
             <p className="badge">Best Cocktails</p>
             <h2>
@@ -87,14 +80,15 @@ const About = () => {
             </h2>
           </div>
 
-          {/* Statistics and Description Section */}
+          {/* Secondary content with description and social proof */}
           <div className="sub-content">
             <p>
               Every cocktail we serve is a reflection of our obsession with
-              detail - from the frist muddle to the final garnish. That care is
+              detail — from the first muddle to the final garnish. That care is
               what turns a simple drink into something truly memorable.
             </p>
-            {/* Customer Rating and Statistics */}
+
+            {/* Customer rating and social proof display */}
             <div>
               <p className="md:text-3xl text-xl font-bold">
                 <span>4.5</span>/5
@@ -107,55 +101,37 @@ const About = () => {
         </div>
       </div>
 
-      {/* Top Image Grid - 3 column responsive layout */}
+      {/* Top row of image grid - responsive 3-6-3 layout */}
       <div className="top-grid">
         <div className="md:col-span-3">
-          <div className="noisy">
-            <img
-              src="/images/abt1.png"
-              alt="Cocktail preparation detail - muddling ingredients"
-            />
-          </div>
+          <div className="noisy" />
+          <img src="/images/abt1.png" alt="Bar interior showcasing elegant atmosphere" />
         </div>
+
         <div className="md:col-span-6">
-          <div className="noisy">
-            <img
-              src="/images/abt2.png"
-              alt="Bar atmosphere and cocktail crafting"
-            />
-          </div>
+          <div className="noisy" />
+          <img src="/images/abt2.png" alt="Master bartender crafting signature cocktail" />
         </div>
+
         <div className="md:col-span-3">
-          <div className="noisy">
-            <img
-              src="/images/abt5.png"
-              alt="Premium cocktail ingredients and garnishes"
-            />
-          </div>
+          <div className="noisy" />
+          <img src="/images/abt5.png" alt="Premium ingredients and garnish preparation" />
         </div>
       </div>
 
-      {/* Bottom Image Grid - 2 column responsive layout */}
+      {/* Bottom row of image grid - responsive 8-4 layout */}
       <div className="bottom-grid">
         <div className="md:col-span-8">
-          <div className="noisy">
-            <img
-              src="/images/abt3.png"
-              alt="Cocktail presentation and final garnish details"
-            />
-          </div>
-        </div>{' '}
+          <div className="noisy" />
+          <img src="/images/abt3.png" alt="Artfully presented cocktails on bar counter" />
+        </div>
+
         <div className="md:col-span-4">
-          <div className="noisy">
-            <img
-              src="/images/abt4.png"
-              alt="Bar tools and cocktail preparation process"
-            />
-          </div>
+          <div className="noisy" />
+          <img src="/images/abt4.png" alt="Close-up of cocktail garnish and presentation details" />
         </div>
       </div>
     </div>
   );
 };
-
 export default About;

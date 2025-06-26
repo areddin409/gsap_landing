@@ -21,13 +21,13 @@ const cocktailLists = [
   {
     name: 'Chapel Hill Shiraz',
     country: 'AU',
-    detail: 'Bottle',
+    detail: 'Battle',
     price: '$10',
   },
   {
     name: 'Caten Malbee',
     country: 'AU',
-    detail: 'Bottle',
+    detail: 'Battle',
     price: '$49',
   },
   {
@@ -48,13 +48,13 @@ const mockTailLists = [
   {
     name: 'Tropical Bloom',
     country: 'US',
-    detail: 'Bottle',
+    detail: 'Battle',
     price: '$10',
   },
   {
     name: 'Passionfruit Mint',
     country: 'US',
-    detail: 'Bottle',
+    detail: 'Battle',
     price: '$49',
   },
   {
@@ -134,7 +134,7 @@ const socials = [
   },
 ];
 
-const sliderLists = [
+const allCocktails = [
   {
     id: 1,
     name: 'Classic Mojito',
@@ -179,5 +179,5 @@ export {
   openingHours,
   storeInfo,
   socials,
-  sliderLists,
+  allCocktails,
 };

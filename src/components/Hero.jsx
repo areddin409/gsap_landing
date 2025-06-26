@@ -1,8 +1,3 @@
-/**
- * @fileoverview Hero section component with advanced GSAP animations and responsive video integration
- * Features text splitting animations, parallax effects, scroll-triggered video playback, and responsive design
- */
-
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/all';
@@ -12,121 +7,110 @@ import { useMediaQuery } from 'react-responsive';
 /**
  * Hero Component
  *
- * The main hero section of the landing page featuring:
- * - Character-by-character text animation using GSAP SplitText
- * - Line-by-line subtitle reveal animations
- * - Parallax scrolling effects for decorative elements
- * - Responsive scroll-triggered video playback with pinning
- * - Mobile-first responsive design with different scroll behaviors
- * - Gradient text effects and smooth easing transitions
+ * The main landing section featuring animated title text, background video,
+ * parallax leaf elements, and scroll-triggered animations.
  *
- * @component
- * @returns {JSX.Element} The rendered hero section with video background
+ * Features:
+ * - GSAP text animation with SplitText for character-by-character reveal
+ * - Scroll-triggered video scrubbing synchronized with scroll position
+ * - Parallax leaf animations that move based on scroll
+ * - Responsive behavior for mobile and desktop
+ * - Gradient text effects applied via CSS classes
  *
- * @requires gsap - For animations and ScrollTrigger
- * @requires gsap/SplitText - For text splitting animations (GSAP Club plugin)
- * @requires react-responsive - For responsive breakpoint detection
+ * Dependencies:
+ * - @gsap/react: React hooks for GSAP
+ * - gsap: Animation library with SplitText plugin
+ * - react-responsive: Media query hook for responsive behavior
+ *
+ * @returns {JSX.Element} The hero section with animated content and video background
  */
 const Hero = () => {
-  /**
-   * Video element reference for controlling playback through GSAP animations
-   * @type {React.RefObject<HTMLVideoElement>}
-   */
+  // Video element reference for controlling playback via GSAP
   const videoRef = useRef();
 
-  /**
-   * Responsive breakpoint detection for mobile devices
-   * Used to adjust animation parameters and scroll behaviors
-   * @type {boolean} - true if viewport width is 767px or less
-   */
+  // Responsive breakpoint detection for mobile-specific animations
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  /**
-   * GSAP Animation Setup
-   *
-   * Implements multiple animation sequences:
-   * 1. Text splitting and character animation for the main title
-   * 2. Line-by-line reveal for subtitle text
-   * 3. Parallax scroll effects for decorative leaf and arrow elements
-   * 4. Responsive scroll-triggered video playback with timeline scrubbing
-   */
   useGSAP(() => {
-    // Split main title into individual characters and words for granular animation
+    // Split title text into individual characters and words for animation
     const heroSplit = new SplitText('.title', {
       type: 'chars, words',
     });
 
-    // Split subtitle into lines for sequential reveal animation
+    // Split subtitle text into lines for staggered line-by-line animation
     const paragraphSplit = new SplitText('.subtitle', {
       type: 'lines',
     });
 
-    // Apply gradient text effect to each character before animation starts
+    // Apply gradient CSS class to each character before animating
+    // This ensures the gradient effect is visible during the animation
     heroSplit.chars.forEach(char => char.classList.add('text-gradient'));
 
-    // Animate title characters from bottom with staggered timing
+    // Animate title characters from bottom (yPercent: 100) with stagger
     gsap.from(heroSplit.chars, {
-      yPercent: 100, // Start 100% below their final position
-      duration: 1.8, // Animation duration in seconds
-      ease: 'expo.out', // Exponential easing for smooth deceleration
-      stagger: 0.06, // 0.06s delay between each character animation
+      yPercent: 100,
+      duration: 1.8,
+      ease: 'expo.out',
+      stagger: 0.06, // Delay between each character animation
     });
 
-    // Animate subtitle lines with fade-in and slide-up effect
+    // Animate subtitle lines with opacity and slide-up effect
     gsap.from(paragraphSplit.lines, {
-      opacity: 0, // Start completely transparent
-      yPercent: 100, // Start 100% below their final position
-      duration: 1.8, // Match title animation duration
-      ease: 'expo.out', // Consistent easing with title
-      stagger: 0.06, // Stagger each line reveal
-      delay: 1, // Wait 1 second before starting subtitle animation
+      opacity: 0,
+      yPercent: 100,
+      duration: 1.8,
+      ease: 'expo.out',
+      stagger: 0.06,
+      delay: 1, // Start after title animation begins
     });
 
-    // Create parallax scroll animation for decorative elements
+    // Parallax animation for decorative leaf elements
+    // Creates depth by moving elements at different speeds during scroll
     gsap
       .timeline({
         scrollTrigger: {
-          trigger: '#hero', // Element that triggers the animation
-          start: 'top top', // Start when hero top hits viewport top
-          end: 'bottom top', // End when hero bottom hits viewport top
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
           scrub: true, // Smooth animation tied to scroll position
         },
       })
-      .to('.right-leaf', { y: 200 }, 0) // Move right leaf down 200px
-      .to('.left-leaf', { y: -200 }, 0) // Move left leaf up 200px
-      .to('.arrow', { y: 100 }, 0); // Move arrow down 100px (all start simultaneously)
+      .to('.right-leaf', { y: 200 }, 0) // Move right leaf down
+      .to('.left-leaf', { y: -200 }, 0) // Move left leaf up
+      .to('.arrow', { y: 100 }, 0); // Move arrow down
 
     // Responsive scroll trigger values for video animation
     const startValue = isMobile ? 'top 50%' : 'center 60%';
     const endValue = isMobile ? '120% top' : 'bottom top';
 
-    // Create scroll-triggered video timeline with responsive parameters
+    // Video scrubbing timeline - advances video playback based on scroll
     let tl = gsap.timeline({
       scrollTrigger: {
-        trigger: 'video', // Video element triggers the animation
-        start: startValue, // Responsive start position
-        end: endValue, // Responsive end position
-        scrub: true, // Scrub video playback to scroll position
-        pin: true, // Pin video element during scroll
+        trigger: 'video',
+        start: startValue,
+        end: endValue,
+        scrub: true, // Ties animation directly to scroll position
+        pin: true, // Pins the video element during animation
       },
     });
 
-    // Set up video timeline animation when metadata is loaded
+    // Set up video timeline once metadata is loaded
+    // This ensures we know the video duration before animating
     videoRef.current.onloadedmetadata = () => {
-      // Animate video currentTime from 0 to full duration based on scroll
       tl.to(videoRef.current, {
-        currentTime: videoRef.current.duration,
+        currentTime: videoRef.current.duration, // Scrub from start to end
       });
     };
-  }, []); // Empty dependency array ensures animation runs once on mount
+  }, []);
+
   return (
     <>
-      {/* Main Hero Section */}
+      {/* Main hero section with noisy texture background */}
       <section id="hero" className="noisy">
-        {/* Main Hero Title - animated with SplitText */}
+        {/* Main title - animated with GSAP SplitText */}
         <h1 className="title">MOJITO</h1>
 
-        {/* Decorative Elements for Parallax Effects */}
+        {/* Decorative leaf images for parallax effect */}
         <img
           src="/images/hero-left-leaf.png"
           alt="Decorative left leaf element"
@@ -138,13 +122,12 @@ const Hero = () => {
           className="right-leaf"
         />
 
-        {/* Main Content Container */}
         <div className="body">
-          {/* Commented out arrow element - kept for potential future use */}
-          <img src="/images/arrow.png" alt="arrow" className="arrow" />
+          {/* Commented out arrow - kept for potential future use */}
+          {/* <img src="/images/arrow.png" alt="arrow" className="arrow" /> */}
 
           <div className="content">
-            {/* Desktop-only tagline section - hidden on mobile */}
+            {/* Desktop-only tagline and subtitle */}
             <div className="space-y-5 hidden md:block">
               <p>Cool. Crisp. Classic.</p>
               <p className="subtitle">
@@ -152,27 +135,30 @@ const Hero = () => {
               </p>
             </div>
 
-            {/* Call-to-action section with description */}
+            {/* Call-to-action section with description and link */}
             <div className="view-cocktails">
               <p className="subtitle">
                 Every cocktail on our menu is a blend of premium ingredients,
                 creative flair, and timeless recipes — designed to delight your
                 senses.
               </p>
-              <a href="#cocktails">View cocktails</a>
+              <a href="#cocktails" aria-label="Navigate to cocktails section">
+                View cocktails
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Scroll-triggered Video Section */}
+      {/* Background video container - positioned absolutely behind hero content */}
       <div className="video absolute inset-0">
         <video
           ref={videoRef}
-          muted // Muted for autoplay compliance
-          playsInline // Ensures inline playback on mobile
-          preload="auto" // Preload video for smooth scrubbing
+          muted
+          playsInline
+          preload="auto"
           src="/videos/output.mp4"
+          aria-label="Background video showing cocktail preparation"
         />
       </div>
     </>
