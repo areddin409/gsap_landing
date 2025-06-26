@@ -68,7 +68,7 @@ const Contact = () => {
       })
       // Animate right decorative leaf
       .to('#f-right-leaf', {
-        y: '-50', // Move up 50px for floating effect
+        x: '50', // Move out 50px for floating effect
         duration: 1, // 1 second animation duration
         ease: 'power1.inOut', // Smooth easing
       })
@@ -76,7 +76,7 @@ const Contact = () => {
       .to(
         '#f-left-leaf',
         {
-          y: '-50', // Match right leaf movement
+          x: '-50', // Match right leaf movement
           duration: 1, // Same duration for synchronization
           ease: 'power1.inOut', // Consistent easing
         },
